@@ -43,4 +43,6 @@ resource "google_bigquery_dataset" "mta_data" {
 
   # Optional: Set default table expiration
   default_table_expiration_ms = 2592000000 # 30 days
-} 
+}
+
+# Note: For multi-region, set var.region to "US" in terraform.tfvars 
