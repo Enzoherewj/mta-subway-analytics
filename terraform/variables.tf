@@ -13,10 +13,4 @@ variable "zone" {
   description = "Zone for GCP resources"
   type        = string
   default     = "us-central1-a"
-}
-
-variable "storage_class" {
-  description = "Storage class type for bucket"
-  type        = string
-  default     = "STANDARD"
 } 

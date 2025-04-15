@@ -14,26 +14,7 @@ provider "google" {
   region  = var.region
 }
 
-# Create GCS Bucket for data lake
-resource "google_storage_bucket" "data_lake" {
-  name          = "${var.project_id}-datalake"
-  location      = var.region
-  force_destroy = true
-
-  # Optional: Lifecycle rules for managing data retention
-  lifecycle_rule {
-    condition {
-      age = 30  # days
-    }
-    action {
-      type = "Delete"
-    }
-  }
-
-  versioning {
-    enabled = true
-  }
-}
+# Removed GCS Bucket for data lake, not needed for direct dlt to BigQuery
 
 # Create BigQuery Dataset
 resource "google_bigquery_dataset" "mta_data" {
