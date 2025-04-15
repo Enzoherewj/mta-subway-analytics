@@ -5,6 +5,7 @@ import argparse
 from datetime import datetime
 from dotenv import load_dotenv
 from typing import Iterator, Dict, List
+from tqdm import tqdm
 
 # Load environment variables
 load_dotenv()
@@ -23,44 +24,41 @@ def fetch_data_from_url(url: str, start_date: str, end_date: str, limit: int = P
     """
     offset = 0
     total_records = 0
-    
+    pbar = None
+    if test_mode:
+        pbar = tqdm(total=limit, desc=f"Fetching from {url}")
     while True:
         if test_mode and total_records >= limit:
             print("Test mode: Reached limit of records to fetch")
             break
-            
         print(f"Fetching records {offset} to {offset + limit} from {url}...")
-        
-        # Construct the query with date range
         params = {
             "$limit": limit,
             "$offset": offset,
             "$where": f"transit_timestamp >= '{start_date}' AND transit_timestamp < '{end_date}'",
             "$$app_token": API_TOKEN
         }
-        
         try:
             resp = requests.get(url, params=params)
             resp.raise_for_status()
             data = resp.json()
-            
             if not data:
                 break
-                
             for record in data:
                 yield record
                 total_records += 1
+                if pbar:
+                    pbar.update(1)
                 if test_mode and total_records >= limit:
                     break
-                    
             if test_mode and total_records >= limit:
                 break
-                
             offset += limit
-            
         except requests.exceptions.RequestException as e:
             print(f"Error fetching data from {url}: {e}")
             break
+    if pbar:
+        pbar.close()
 
 @dlt.source
 def mta_source(test_mode: bool = False, test_limit: int = 100):
