@@ -3,6 +3,7 @@ from datetime import datetime
 from google.cloud import bigquery
 from dotenv import load_dotenv
 import argparse
+from google.cloud import storage
 
 # Load environment variables
 load_dotenv()
@@ -65,6 +66,18 @@ def load_data_from_gcs(client, year, month):
     table_id = f"{PROJECT_ID}.{DATASET_ID}.mta_ridership_{year}"
     uri = f"gs://{BUCKET_NAME}/mta_ridership/{year}/mta_ridership_{year}_{month:02d}.csv"
     
+    # Check if file exists in GCS
+    try:
+        storage_client = storage.Client()
+        bucket = storage_client.bucket(BUCKET_NAME)
+        blob = bucket.blob(f"mta_ridership/{year}/mta_ridership_{year}_{month:02d}.csv")
+        if not blob.exists():
+            print(f"File for {year}-{month:02d} does not exist in GCS. Skipping...")
+            return
+    except Exception as e:
+        print(f"Error checking GCS file: {e}")
+        return
+    
     # Check if data for this month already exists
     query = f"""
     SELECT COUNT(*) as count
@@ -120,7 +133,10 @@ def main():
             create_or_update_table(client, year, args.force_recreate)
             
             # Determine end month based on year
-            end_month = 12 if year < 2025 else 4  # 2025 only goes up to April
+            if year == 2025:
+                end_month = 3  # 2025 only goes up to March
+            else:
+                end_month = 12 
             
             for month in range(1, end_month + 1):
                 print(f"Loading data for {year}-{month:02d}...")
@@ -135,7 +151,10 @@ def main():
             load_data_from_gcs(client, args.year, args.month)
         else:
             # Process all months for the year
-            end_month = 12 if args.year < 2025 else 4  # 2025 only goes up to April
+            if args.year == 2025:
+                end_month = 3
+            else:
+                end_month = 12 
             for month in range(1, end_month + 1):
                 print(f"Loading data for {args.year}-{month:02d}...")
                 load_data_from_gcs(client, args.year, month)
