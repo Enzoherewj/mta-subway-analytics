@@ -11,7 +11,7 @@ with hourly_aggregates as (
         date_day,
         hour_of_day,
         day_of_week,
-        cleaned_borough as borough,
+        borough,
         sum(ridership) as total_ridership,
         count(distinct station_complex_id) as active_stations
     from {{ ref('stg_mta_ridership') }}
@@ -51,7 +51,7 @@ select
     -- Calculate ridership as percentage of typical
     case
         when w.avg_daily_ridership = 0 then 100
-        else (d.daily_ridership / w.avg_daily_ridership * 100)::int
+        else CAST((d.daily_ridership / w.avg_daily_ridership * 100) AS INT64)
     end as ridership_vs_typical_pct
 from daily_aggregates d
 left join weekly_patterns w

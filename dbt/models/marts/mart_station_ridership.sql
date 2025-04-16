@@ -9,8 +9,8 @@ with daily_station_stats as (
     select
         date_day,
         station_complex_id,
-        cleaned_station_name as station_name,
-        cleaned_borough as borough,
+        station_complex as station_name,
+        borough,
         latitude,
         longitude,
         sum(ridership) as total_ridership,
@@ -40,7 +40,7 @@ select
     -- Calculate ridership intensity score (0-100)
     case
         when max_daily_ridership = min_daily_ridership then 50
-        else ((avg_daily_ridership - min_daily_ridership) / 
-              (max_daily_ridership - min_daily_ridership) * 100)::int
+        else CAST(((avg_daily_ridership - min_daily_ridership) / 
+              (max_daily_ridership - min_daily_ridership) * 100) AS INT64)
     end as ridership_intensity_score
 from station_metrics 

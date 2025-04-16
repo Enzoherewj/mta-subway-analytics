@@ -2,11 +2,11 @@ version: 2
 
 sources:
   - name: mta
-    database: your_project_id
-    schema: raw
+    database: mta-subway-456918
+    schema: mta_subway_data
     tables:
-      - name: raw_ridership
-        description: "Raw MTA subway ridership data from 2023-2025"
+      - name: mta_ridership_2023
+        description: "MTA subway ridership data for 2023"
         columns:
           - name: transit_timestamp
             description: "Timestamp of the ridership record"
@@ -55,4 +55,8 @@ sources:
           - name: georeference
             description: "Geography reference for the station"
             tests:
-              - not_null 
+              - not_null
+      - name: mta_ridership_2024
+        description: "MTA subway ridership data for 2024"
+      - name: mta_ridership_2025
+        description: "MTA subway ridership data for 2025" 

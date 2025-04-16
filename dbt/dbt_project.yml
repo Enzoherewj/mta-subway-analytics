@@ -57,12 +57,3 @@ vars:
   # dbt build --vars 'is_test_run: false' if you want to run the full dataset
   is_test_run: true    # Default to test mode
   row_limit: 100       # Default limit for test runs
-
-sources:
-  - name: mta
-    database: mta-subway-456918    # Your actual project ID
-    schema: mta_subway_data        # Your actual dataset name
-    tables:
-      - name: mta_ridership_2023   # First year table
-      - name: mta_ridership_2024   # Second year table
-      - name: mta_ridership_2025   # Third year table
