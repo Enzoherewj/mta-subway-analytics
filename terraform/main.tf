@@ -10,11 +10,28 @@ terraform {
 }
 
 provider "google" {
-  project = var.project_id
-  region  = var.region
+  project     = var.project_id
+  region      = var.region
+  credentials = file(var.credentials_file)  # Use the service account JSON file
 }
 
-# Removed GCS Bucket for data lake, not needed for direct dlt to BigQuery
+# Create GCS Bucket for data lake
+resource "google_storage_bucket" "mta_data_lake" {
+  name          = "${var.project_id}-mta-data-lake"
+  location      = var.region
+  force_destroy = true  # Allows bucket to be deleted even if not empty
+
+  uniform_bucket_level_access = true
+
+  lifecycle_rule {
+    condition {
+      age = 30  # days
+    }
+    action {
+      type = "Delete"
+    }
+  }
+}
 
 # Create BigQuery Dataset
 resource "google_bigquery_dataset" "mta_data" {

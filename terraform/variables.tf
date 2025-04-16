@@ -13,4 +13,9 @@ variable "zone" {
   description = "Zone for GCP resources"
   type        = string
   default     = "us-central1-a"
+}
+
+variable "credentials_file" {
+  description = "Path to the GCP service account key file"
+  type        = string
 } 
