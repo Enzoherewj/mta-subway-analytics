@@ -1,8 +1,7 @@
-
 # Name your project! Project names should contain only lowercase characters
 # and underscores. A good package name should reflect your organization's
 # name or the intended use of these models
-name: 'my_new_project'
+name: 'mta_subway_analytics'
 version: '1.0.0'
 config-version: 2
 
@@ -36,7 +35,20 @@ clean-targets:         # directories to be removed by `dbt clean`
 # using the `{{ config(...) }}` macro.
 
 models:
-  my_new_project:
-    # Applies to all files under models/example/
-    example:
+  mta_subway_analytics:
+    # Configs for staging models
+    staging:
       +materialized: table
+      +schema: staging
+      +tags: ["staging"]
+    
+    # Configs for mart models
+    marts:
+      +materialized: table
+      +schema: marts
+      +tags: ["marts"]
+
+vars:
+  # Default variables that can be overridden
+  start_date: '2023-01-01'
+  end_date: '2025-04-01'

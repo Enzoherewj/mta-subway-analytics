@@ -1,0 +1,58 @@
+version: 2
+
+sources:
+  - name: mta
+    database: your_project_id
+    schema: raw
+    tables:
+      - name: raw_ridership
+        description: "Raw MTA subway ridership data from 2023-2025"
+        columns:
+          - name: transit_timestamp
+            description: "Timestamp of the ridership record"
+            tests:
+              - not_null
+          - name: transit_mode
+            description: "Type of transit mode"
+            tests:
+              - not_null
+          - name: station_complex_id
+            description: "Unique identifier for the station complex"
+            tests:
+              - not_null
+          - name: station_complex
+            description: "Name of the station complex"
+            tests:
+              - not_null
+          - name: borough
+            description: "Borough where the station is located"
+            tests:
+              - not_null
+          - name: payment_method
+            description: "Type of payment method used"
+            tests:
+              - not_null
+          - name: fare_class_category
+            description: "Category of fare class"
+            tests:
+              - not_null
+          - name: ridership
+            description: "Number of riders"
+            tests:
+              - not_null
+          - name: transfers
+            description: "Number of transfers"
+            tests:
+              - not_null
+          - name: latitude
+            description: "Latitude coordinate of the station"
+            tests:
+              - not_null
+          - name: longitude
+            description: "Longitude coordinate of the station"
+            tests:
+              - not_null
+          - name: georeference
+            description: "Geography reference for the station"
+            tests:
+              - not_null 
