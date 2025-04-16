@@ -52,3 +52,8 @@ vars:
   # Default variables that can be overridden
   start_date: '2023-01-01'
   end_date: '2025-04-01'
+  # Development settings (default to test mode)
+
+  # dbt build --vars 'is_test_run: false' if you want to run the full dataset
+  is_test_run: true    # Default to test mode
+  row_limit: 100       # Default limit for test runs
