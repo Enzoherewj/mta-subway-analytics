@@ -1,0 +1,12 @@
+# Core dependencies
+python-dotenv==1.0.0
+requests==2.31.0
+tqdm==4.66.1
+
+# Google Cloud
+google-cloud-storage==2.14.0
+google-cloud-bigquery==3.17.2
+
+# Data transformation
+dbt-core==1.7.8
+dbt-bigquery==1.7.8
