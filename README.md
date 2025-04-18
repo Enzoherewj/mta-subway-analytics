@@ -41,12 +41,10 @@ The pipeline performs the following steps:
 BigQuery tables are optimized for analytical queries:
 - Partitioned by date for efficient temporal queries
 - Clustered by station and borough for geographical analysis
-- Indexed for common aggregation patterns
 
 ### Data Transformations
 dbt models create the following layers:
 - staging: Raw data cleaning and type casting
-- intermediate: Core business logic and metrics
 - mart: Final tables optimized for dashboard queries
 
 ## Getting Started
