@@ -3,6 +3,13 @@
 ## Overview
 This dashboard provides comprehensive analytics for New York City's subway ridership patterns using Metabase visualizations. The analysis is based on MTA turnstile data, focusing on station performance, temporal trends, and payment methods.
 
+## Dashboard Preview
+### Page 1
+![MTA Analytics Dashboard Page 1](MTA-Analytics-dashboard_page-0001.jpg)
+
+### Page 2
+![MTA Analytics Dashboard Page 2](MTA-Analytics-dashboard_page-0002.jpg)
+
 ## Dashboard Components
 
 ### 1. Station Performance
@@ -26,4 +33,3 @@ This dashboard provides comprehensive analytics for New York City's subway rider
 - **OMNY vs MetroCard Usage**
   - OMNY (One Metro New York), the contactless tap-and-go payment system, continues to grow in popularity
   - Tracks the transition in payment preferences
-
