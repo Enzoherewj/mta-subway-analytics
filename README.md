@@ -15,15 +15,22 @@ This project implements an end-to-end data pipeline that processes MTA subway ri
 
 ## Data Pipeline
 
-### Data Source
-- MTA Subway Hourly Ridership Data (2023-2025)
-- Source: [data.ny.gov](https://data.ny.gov/Transportation/MTA-Subway-Hourly-Ridership-2020-2024/wujg-7c2s)
-- Update Frequency: Daily
-- Key metrics: ridership counts, station information, payment methods
+### Data Sources
+1. MTA Subway Hourly Ridership (2020-2024)
+   - Source: [data.ny.gov](https://data.ny.gov/Transportation/MTA-Subway-Hourly-Ridership-2020-2024/wujg-7c2s)
+   - Date Range: 2020-01-01 to 2024-12-31
+   - Update Frequency: Daily
+   - Key metrics: ridership counts, station information, payment methods
+
+2. MTA Subway Hourly Ridership (2025)
+   - Source: [data.ny.gov](https://data.ny.gov/Transportation/MTA-Subway-Hourly-Ridership-Beginning-2025/5wq4-mkjj)
+   - Date Range: 2025-01-01 to present
+   - Update Frequency: Daily
+   - Key metrics: ridership counts, station information, payment methods
 
 ### Batch Processing
 The pipeline performs the following steps:
-1. Ingests data from MTA API using Python requests library
+1. Ingests data from both MTA APIs using Python requests library
 2. Processes data in monthly batches
 3. Stores raw CSV files in GCS
 4. Loads into BigQuery staging tables using bq_load.py
