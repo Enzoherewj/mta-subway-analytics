@@ -3,8 +3,6 @@
 ## Problem Description
 This project implements an end-to-end data pipeline that processes MTA subway ridership data to analyze passenger flow patterns across New York City's subway system. The pipeline ingests hourly ridership data from the MTA's open data portal, transforms it using modern data tools, and visualizes key insights through an interactive dashboard.
 
-## Architecture
-![Architecture Diagram (TODO)]()
 
 ### Technology Stack
 - **Cloud**: Google Cloud Platform (GCP)

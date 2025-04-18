@@ -1,32 +1,69 @@
-# MTA Subway Data Ingestion Pipeline
+# Data Ingestion Pipeline
 
-This directory contains the data ingestion pipeline for MTA Subway ridership data. The pipeline fetches data from the MTA API and stores it in Google Cloud Storage (GCS).
+This directory contains scripts for ingesting MTA subway ridership data and loading it into BigQuery.
 
-## Setup
+## Files
 
-1. Install dependencies:
-```bash
-pip install -r requirements.txt
+### mta_ingest.py
+- Ingests data from MTA API
+- Processes data in monthly batches
+- Stores raw CSV files in Google Cloud Storage
+- Supports test mode with limited data
+
+### bq_load.py
+- Loads data from GCS into BigQuery
+- Creates/updates tables with proper schema
+- Handles partitioning and clustering
+- Supports both full and partial data loading
+
+### Environment Files
+- `.env`: Contains actual environment variables (not tracked in git)
+- `.env.example`: Template for required environment variables
+
+## Environment Variables
+
+Create a `.env` file with the following variables:
 ```
+# MTA API Configuration
+MTA_API_TOKEN=your_api_token
+MTA_API_BASE_URL=https://data.ny.gov/resource/wujg-7c2s.json
 
-2. Configure environment variables:
-   - Copy `.env.example` to `.env`
-   - Update the following variables in `.env`:
-     - `MTA_API_TOKEN`: Your MTA API token
-     - `GOOGLE_APPLICATION_CREDENTIALS`: Path to your GCP service account key
-     - `GCP_PROJECT_ID`: Your GCP project ID
-     - `GCP_BUCKET_NAME`: Target GCS bucket name
+# GCP Configuration
+GOOGLE_APPLICATION_CREDENTIALS=/path/to/your/gcp_credentials.json
+GCP_PROJECT_ID=your_project_id
+GCP_DATASET_ID=your_dataset_id
+GCP_BUCKET_NAME=your_bucket_name
+```
 
 ## Usage
 
-Run the ingestion pipeline:
+### Data Ingestion
 ```bash
-# Test run with limited records
-python mta_ingest.py --test --test-limit 200
-
-# Full run
+# Full ingestion
 python mta_ingest.py
+
+# Test ingestion (limited data)
+python mta_ingest.py --test --test-limit 100
 ```
+
+### BigQuery Loading
+```bash
+# Load all years
+python bq_load.py --all-years
+
+# Load specific year/month
+python bq_load.py --year 2023 --month 1
+
+# Force recreate tables
+python bq_load.py --all-years --force-recreate
+```
+
+## Dependencies
+- python-dotenv
+- requests
+- tqdm
+- google-cloud-storage
+- google-cloud-bigquery
 
 ## Data Range
 

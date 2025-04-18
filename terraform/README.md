@@ -1,72 +1,76 @@
-# MTA Subway Analytics Infrastructure
+# Infrastructure as Code
 
-This directory contains Terraform configurations to set up the GCP infrastructure for the MTA Subway Analytics project.
+This directory contains Terraform configurations for setting up the GCP infrastructure required for the MTA Subway Analytics pipeline.
 
-## Prerequisites
+## Files
 
-1. Install [Terraform](https://www.terraform.io/downloads.html)
-2. Have a GCP project created
+### main.tf
+- Defines GCP resources:
+  - BigQuery dataset
+  - Google Cloud Storage bucket
+  - IAM permissions
+  - Service accounts
 
-## Manual Setup (Required Before Running Terraform)
+### variables.tf
+- Defines input variables:
+  - project_id
+  - region
+  - zone
+  - credentials_file
 
-1. Create a service account in GCP Console:
-   - Go to IAM & Admin > Service Accounts
-   - Click "Create Service Account"
-   - Name it "terraform-admin"
-   - Grant these roles:
-     - BigQuery Admin
-     - Storage Admin
-     - Project IAM Admin
+### terraform.tfvars
+- Contains actual variable values (not tracked in git)
+- Based on terraform.tfvars.example template
 
-2. Create and download a key for this service account:
-   - Click on the service account
-   - Go to "Keys" tab
-   - Click "Add Key" > "Create new key"
-   - Choose JSON format
-   - Save the key file securely
+### State Files
+- terraform.tfstate: Current state
+- terraform.tfstate.backup: Backup of previous state
+- .terraform.lock.hcl: Dependency lock file
 
-3. Set the environment variable:
-```bash
-export GOOGLE_APPLICATION_CREDENTIALS="path/to/your/terraform-service-account-key.json"
-```
+## Setup
 
-## Configuration
-
-1. Copy the example variables file:
+1. Copy terraform.tfvars.example to terraform.tfvars:
 ```bash
 cp terraform.tfvars.example terraform.tfvars
 ```
 
-2. Edit `terraform.tfvars` with your values:
-```hcl
+2. Update terraform.tfvars with your values:
+```bash
 project_id = "your-project-id"
-region     = "us-central1"
+region     = "US"
 zone       = "us-central1-a"
+credentials_file = "path/to/your/service-account-key.json"
 ```
 
-## Usage
-
-1. Initialize Terraform:
+3. Initialize Terraform:
 ```bash
 terraform init
 ```
 
-2. Review the planned changes:
-```bash
-terraform plan
-```
+## Usage
 
-3. Apply the configuration:
+### Apply Infrastructure
 ```bash
 terraform apply
 ```
 
-## Infrastructure Created
+### Destroy Infrastructure
+```bash
+terraform destroy
+```
 
-- GCS bucket for data lake
-- BigQuery dataset
+## Resources Created
+
+- BigQuery Dataset: `mta_subway_analytics`
+- GCS Bucket: `mta-subway-data`
+- Service Account: `mta-subway-sa`
+- IAM Roles:
+  - BigQuery Data Editor
+  - Storage Object Viewer
+  - Storage Object Creator
 
 ## Security Notes
 
-- Keep your service account key secure and never commit it to version control
-- The GCS bucket has versioning enabled and a 30-day lifecycle rule 
+- Keep terraform.tfvars and service account keys out of version control
+- Use .gitignore to exclude sensitive files
+- Rotate service account keys regularly 
