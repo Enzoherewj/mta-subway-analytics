@@ -112,6 +112,7 @@ MTA_API_BASE_URL=https://data.ny.gov/resource/wujg-7c2s.json
 GOOGLE_APPLICATION_CREDENTIALS=/path/to/your/gcp_credentials.json
 GCP_PROJECT_ID=your_project_id
 GCP_DATASET_ID=your_dataset_id
+GCP_BUCKET_NAME=your_bucket_name
 ```
 
 2. Terraform Setup (terraform.tfvars):
