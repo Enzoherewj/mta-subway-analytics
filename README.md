@@ -1,5 +1,9 @@
 # MTA Subway Analytics Pipeline
 
+![MTA Subway Analytics Architecture](./diagram.jpeg)
+
+*Figure: End-to-end cloud architecture for the MTA Subway Analytics Pipeline, showing data flow from the MTA Open Data API through Python ingestion, Google Cloud Storage, BigQuery, dbt transformations, and Metabase dashboards. Infrastructure is managed with Terraform.*
+
 ## Problem Description
 This project implements an end-to-end data pipeline that processes MTA subway ridership data to analyze passenger flow patterns across New York City's subway system. The pipeline ingests hourly ridership data from the MTA's open data portal, transforms it using modern data tools, and visualizes key insights through an interactive dashboard.
 
