@@ -18,11 +18,11 @@ This directory contains scripts for ingesting MTA subway ridership data and load
 
 ### Environment Files
 - `.env`: Contains actual environment variables (not tracked in git)
-- `.env.example`: Template for required environment variables
+- `.env.example`: Template for required environment variables (see below)
 
 ## Environment Variables
 
-Create a `.env` file with the following variables:
+Create a `.env` file with the following variables (see `.env.example`):
 ```
 # MTA API Configuration
 MTA_API_TOKEN=your_api_token
@@ -65,6 +65,16 @@ python bq_load.py --all-years --force-recreate
 - google-cloud-storage
 - google-cloud-bigquery
 
+## Troubleshooting
+
+### ModuleNotFoundError: No module named 'distutils'
+If you see this error, install distutils via your OS package manager:
+```bash
+sudo apt-get install python3-distutils
+# or, for some environments:
+pip install setuptools
+```
+
 ## Data Range
 
 The pipeline ingests data from:
@@ -79,7 +89,7 @@ The pipeline ingests data from:
 - Processes data in batches of 50,000 records
 - Stores data in GCS with the following structure:
   ```
-  gs://bucket/mta_ridership/
+  gs://<your-bucket-name>/mta_ridership/
   ├── 2023/
   │   ├── mta_ridership_2023_01.csv
   │   ├── mta_ridership_2023_02.csv

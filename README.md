@@ -88,7 +88,7 @@ make --version
 
 1. Clone the repository:
 ```bash
-git clone https://github.com/yourusername/mta-subway-analytics.git
+git clone https://github.com/Enzoherewj/mta-subway-analytics.git
 cd mta-subway-analytics
 ```
 
